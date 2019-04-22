@@ -1,6 +1,7 @@
-package com.example.redis_demo.service;
+package com.example.redis_demo.service.impl;
 
 import com.example.redis_demo.model.Product;
+import com.example.redis_demo.service.IProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -10,10 +11,10 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-//@CacheConfig(cacheManager = "secondManager")
+@CacheConfig(cacheManager = "secondManager")
 @Slf4j
 @Service
-public class ProductService {
+public class ProductService implements IProductService {
 
     private List<Product> products;
 
@@ -25,11 +26,12 @@ public class ProductService {
     }
 
     @Cacheable(cacheNames = "product")
+    @Override
     public Product getProduct(String id) {
         log.info("Get product by id in service, id={}", id);
         return products.stream()
                 .filter(product -> id.equals(product.getId()))
                 .findAny()
-                .orElseThrow(() ->new IllegalArgumentException("Product nit found"));
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
     }
 }

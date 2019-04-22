@@ -1,7 +1,8 @@
 package com.example.redis_demo.controller;
 
 import com.example.redis_demo.model.Product;
-import com.example.redis_demo.service.ProductService;
+import com.example.redis_demo.service.IProductService;
+import com.example.redis_demo.service.impl.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductController {
 
-    private final ProductService productService;
+    private final IProductService productService;
 
     @Autowired
     public ProductController(ProductService productService) {
